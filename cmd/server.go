@@ -99,14 +99,37 @@ func index_page(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
-func main() {
-	orders = append(orders, Order{ID: 1, Dish: "Pizza", Quantity: 2, IsReady: true, IsServed: false}, Order{2, "Пельмени жаренные", 2, false, false})
+
+// Чтобы раздавать файл нужно использовать путь /эндпоин/нужный файл
+func create(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path == "/create" {
+		http.ServeFile(w, r, "../html/create.html")
+		return
+	}
+
+	if r.URL.Path == "/create/style.css" {
+		http.ServeFile(w, r, "../html/style.css")
+		return
+	}
+}
+
+func runServer() {
+	//Api
 	http.HandleFunc("/api/order/list", getOrders)
 	http.HandleFunc("/api/order/create", createOrder)
 	http.HandleFunc("/api/order/update", updateOrder)
 	http.HandleFunc("/api/order/delete", deleteOrder)
+	//FrontEnd
 	http.HandleFunc("/", index_page)
+	http.HandleFunc("/create", create)
 	http.Handle("/html/", http.StripPrefix("/html/", http.FileServer(http.Dir("../html/"))))
+	http.Handle("/html/assets/", http.StripPrefix("/html/assets", http.FileServer(http.Dir("../html/assets"))))
+
 	fmt.Println("Сервер запущен на порту 8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
+}
+
+func main() {
+	orders = append(orders, Order{ID: 1, Dish: "Пицца Пеперони", Quantity: 1, IsReady: true, IsServed: false}, Order{2, "Пельмени жаренные", 2, false, false})
+	runServer()
 }
