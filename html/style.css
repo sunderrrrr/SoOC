@@ -1,0 +1,32 @@
+* {
+  margin: 0;/*это свойство можно удалить, если вы используете reset, normalize или нечто подобное*/
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+.main{
+  margin-top: 50px;
+  margin-left: 15px;
+  margin-right: 15px;
+  flex: 1 0 auto;
+}
+#orderContainer{
+
+}
+.orderCard {
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: 20%;
+  }
+footer {
+  flex: 0 0 auto;
+  }
