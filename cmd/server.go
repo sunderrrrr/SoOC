@@ -98,9 +98,13 @@ func index_page(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../html/style.css")
 		return
 	}
+	if r.URL.Path == "/parse.js" {
+		http.ServeFile(w, r, "../html/parse.js")
+		return
+	}
 }
 
-// Чтобы раздавать файл нужно использовать путь /эндпоин/нужный файл
+// Чтобы раздавать файл нужно использовать путь /эндпоинт/нужный файл
 func create(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/create" {
 		http.ServeFile(w, r, "../html/create.html")
@@ -111,6 +115,23 @@ func create(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../html/style.css")
 		return
 	}
+	if r.URL.Path == "/create/parse.js" {
+		http.ServeFile(w, r, "../html/parse.js")
+		return
+	}
+}
+
+func guide(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path == "/guide" {
+		http.ServeFile(w, r, "../html/guide.html")
+		return
+	}
+
+	if r.URL.Path == "/guide/style.css" {
+		http.ServeFile(w, r, "../html/style.css")
+		return
+	}
+
 }
 
 func runServer() {
@@ -122,6 +143,7 @@ func runServer() {
 	//FrontEnd
 	http.HandleFunc("/", index_page)
 	http.HandleFunc("/create", create)
+	http.HandleFunc("/guide", guide)
 	http.Handle("/html/", http.StripPrefix("/html/", http.FileServer(http.Dir("../html/"))))
 	http.Handle("/html/assets/", http.StripPrefix("/html/assets", http.FileServer(http.Dir("../html/assets"))))
 

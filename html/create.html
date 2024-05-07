@@ -20,10 +20,10 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" href="#">Добавить заказ</a>
+            <a class="nav-link active" href="/create">Добавить заказ</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Инструкция</a>
+            <a class="nav-link" href="/guide">Инструкция</a>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" aria-disabled="true">Управление сотрудниками</a>
@@ -37,12 +37,12 @@
         <form>
             <div class="mb-3">
               <label for="dishName" class="form-label">Название блюда</label>
-              <input type="email" class="form-control" id="dishName">
+              <input type="text" class="form-control" id="dishName">
               
             </div>
             <div class="mb-3">
               <label for="count" class="form-label">Количество Порций</label>
-              <input type="number" class="form-control" id="count" min="1" max="10">
+              <input type="number" class="form-control" id="dishCount" min="1" max="10">
             </div>
             <label class="form-label">Вариант получения:</label>
             <div class="mb-3 form-check">
@@ -54,7 +54,7 @@
                 <input type="radio" class="form-check-input" id="exampleCheck2" name="grab" value="outdoors">
                 <label class="form-check-label" for="exampleCheck1">С собой</label>       
               </div>
-            <button type="submit" class="btn btn-primary">Создать</button>
+            <button type="submit" class="btn btn-primary" onclick="createOrderForm()">Создать</button>
           </form>
     </div>
     <h4>Активные заказы</h4>
@@ -71,50 +71,7 @@
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  <script>
-    async function getOrders() {
-      const response = await fetch('http://localhost:8080/api/order/list');
-      const data = await response.json();
-      console.log(data);
-      displayOrders(data);
-    }
-    
-    function displayOrders(orders) {
-      const orderContainer = document.getElementById('orderContainer');
-      orderContainer.innerHTML = '';
-      
-      orders.forEach(order => {
-        let id = order.id
-        let dishName = order.dish || "Блюдо не указано";
-        let quantity = order.quantity || 0;
-        let isReady = order.isready ? "Да" : "Нет";
-        let isServed = order.isserved ? "Да" : "Нет";
-        const orderCard = document.createElement('div');
-        orderCard.className = 'orderCard';
-        orderCard.innerHTML = `# Заказа: ${id}<br> Блюдо: ${dishName}<br> Порций: ${quantity}<br> Готовность: ${isReady}<br> Выдан: ${isServed} <br>
-          <br>`;
-        orderContainer.appendChild(orderCard);
-      });
-    }
-    
-    
-    async function createOrderForm() {
-      const newDish = prompt('Enter Dish:');
-      const newQuantity = prompt('Enter Quantity:');
-      
-      await fetch('http://localhost:8080/api/order/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ "Dish": newDish, "Quantity": parseInt(newQuantity), "IsReady": false, "IsServed": false }),
-      });
-      getOrders();
-    }
-
-
-    
-    getOrders();
+  <script defer src="/html/parse.js">
   </script>
 </body>
 </html>
