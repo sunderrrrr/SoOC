@@ -1,5 +1,5 @@
 async function getOrders() {
-    const response = await fetch('http://localhost:8080/api/order/list');
+    const response = await fetch('/api/order/list');
     const data = await response.json();
     console.log(data);
     displayOrders(data);
@@ -16,11 +16,18 @@ async function getOrders() {
       let isReady = order.isready ? "Да" : "Нет";
       let isServed = order.isserved ? "Да" : "Нет";
       const orderCard = document.createElement('div');
-      orderCard.className = 'orderCard';
-      orderCard.innerHTML = `# Заказа: ${id}<br> Блюдо: ${dishName}<br> Порций: ${quantity}<br> Готовность: ${isReady}<br> Выдан: ${isServed} <br>
-        <br>
-        <button onclick="deleteOrder(${id})" class="btn btn-outline-danger">Удалить</button>
-        <button onclick="updateOrder(${id})" class="btn btn-outline-primary">Обновить</button>`;
+      orderCard.className = 'card';
+      orderCard.style.width="16rem";
+      orderCard.innerHTML = `<div class="card-body">
+      <h6 class="card-title"><b>Номер заказа: ${id}</b></h6>
+      <p class="card-text">${dishName}</p>
+      <p class="card-text">Кол-во порций: ${quantity}</p>
+      <p class="card-text">Готов: ${isReady}</p>
+      <p class="card-text">Выдан: ${isServed}</p>
+      <button onclick="deleteOrder(${id})" class="btn btn-outline-danger">Удалить</button>
+      <button onclick="updateOrder(${id})" class="btn btn-outline-primary">Обновить</button>
+    </div>
+  `;
       orderContainer.appendChild(orderCard);
     });
   }
@@ -34,13 +41,14 @@ async function getOrders() {
       body: JSON.stringify({ "ID": orderId }),
     });
     getOrders();
+    appendAlert("Заказ успешно удален", "success");
   }
   
   async function createOrderForm() {
     const newDish = document.getElementById("dishName").value;
     const newQuantity = document.getElementById("dishCount").value;
     
-    await fetch('http://localhost:8080/api/order/create', {
+    await fetch('/api/order/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -62,3 +70,18 @@ async function getOrders() {
 }
   
   getOrders();
+
+
+const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+const appendAlert = (message, type) => {
+  const wrapper = document.createElement('div')
+  wrapper.innerHTML = [
+    `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+    `   <div>${message}</div>`,
+    '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+    '</div>'
+  ].join('')
+
+  alertPlaceholder.append(wrapper)
+}
+
