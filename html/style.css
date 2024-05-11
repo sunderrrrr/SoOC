@@ -37,9 +37,15 @@ footer {
   flex: 0 0 auto;
 }
 .card{
+min-width: 25%;
 margin: 20px;
 }
 #orderContainer{
   display: flex;  
   flex-direction: row;
+}
+
+.alert{
+  margin: 20px;
+  width: 350px;
 }
