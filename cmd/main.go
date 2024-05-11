@@ -8,9 +8,9 @@ import (
 )
 
 func runServer() {
-	api := api.New("localhost:8080", http.NewServeMux())
+	api := api.New("localhost:8090", http.NewServeMux())
 	api.FillEndpoints()
-	fmt.Println("Сервер запущен на порту 8080")
+	fmt.Println("Сервер запущен на порту 8090")
 	log.Fatal(api.ListenAndServe())
 }
 
