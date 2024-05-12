@@ -5,6 +5,8 @@ import (
 	"net/http"
 )
 
+// Удаление заказа по id
+// Пример запроса curl -X DELETE -H "Content-Type: application/json" -d "{\"ID\": 2}" http://localhost:8080/api/order/delete
 func DeleteOrder(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodDelete:
@@ -14,7 +16,7 @@ func DeleteOrder(w http.ResponseWriter, r *http.Request) {
 
 		for i, order := range orders {
 			if order.ID == deletedOrder.ID {
-				orders = append(orders[:i], orders[i+1:]...)
+				orders = append(orders[:i], orders[i+1:]...) //Копируем все до i-элемента и добавляем значения i+1 элемента
 				break
 			}
 		}

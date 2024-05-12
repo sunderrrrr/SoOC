@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-type Order struct {
+type Order struct { //Структура заказа
 	ID       int    `json:"id"`       //Id
 	Dish     string `json:"dish"`     //Название
 	Quantity int    `json:"quantity"` //Количество
@@ -16,12 +16,12 @@ type Order struct {
 
 var orders []Order
 
-type api struct {
+type api struct { //Структура Api
 	address string
 	router  *http.ServeMux
 }
 
-func New(address string, router *http.ServeMux) *api {
+func New(address string, router *http.ServeMux) *api { //Инициализаця Api
 	return &api{address: address, router: router}
 }
 
@@ -40,10 +40,12 @@ func (api *api) FillEndpoints() {
 	api.router.HandleFunc("/api/order/delete", DeleteOrder)
 	fmt.Println("API запущено")
 
+	//Запролнения массивов с заказами хоть чем-то
 	orders = append(orders, Order{ID: 1, Dish: "Пицца Пеперони", Quantity: 1, IsReady: true, IsServed: false}, Order{2, "Пельмени жаренные", 2, false, false})
 
 }
 
+// Метод запуска сервера для Api
 func (api *api) ListenAndServe() error {
 	return http.ListenAndServe(api.address, api.router)
 }

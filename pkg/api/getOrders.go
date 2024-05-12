@@ -5,6 +5,8 @@ import (
 	"net/http"
 )
 
+// Получение списка всех заказов ввиде массива JSON
+// Пример запроса curl -X GET http://localhost:8080/api/order/list
 func GetOrders(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
