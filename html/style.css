@@ -1,10 +1,11 @@
 * {
-  margin: 0;/*это свойство можно удалить, если вы используете reset, normalize или нечто подобное*/
+  margin: 0;
+  /*это свойство можно удалить, если вы используете reset, normalize или нечто подобное*/
 }
 
 html,
 body {
-  
+
   height: 100%;
 }
 
@@ -12,34 +13,52 @@ body {
   display: flex;
   flex-direction: column;
 }
-.main{
+
+.main {
   margin-top: 50px;
   margin-left: 15px;
   margin-right: 15px;
   flex: 1 0 auto;
 }
+
 .orderCard {
-    display: inline-block;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin: 10px;
-    width: 20%;
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 20%;
 }
-.create-form{
+
+.create-form {
   border-radius: 5px;
   border: 1px solid black;
   padding: 10px;
   width: 50%;
   margin-left: auto;
-  margin-right: auto 
+  margin-right: auto;
+  margin-top: 15px;
+  margin-bottom: 45px;
 }
+
 footer {
   flex: 0 0 auto;
 }
-.card{
-margin: 20px;
+
+.card {
+  min-width: 25%;
+  margin: 20px;
 }
-#orderContainer{
-  display: flex;  
+
+#orderContainer {
+  display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
+}
+
+.alert {
+  margin: 20px;
+  width: 350px;
+}
+
+.navbar {
+  background-color: #426500;
 }
