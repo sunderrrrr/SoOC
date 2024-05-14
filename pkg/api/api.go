@@ -27,17 +27,17 @@ func New(address string, router *http.ServeMux) *api { //Инициализац�
 
 func (api *api) FillEndpoints() {
 	//FrontEnd endpoints
-	api.router.HandleFunc("/", frontend.Index)
-	api.router.HandleFunc("/create", frontend.Create)
-	api.router.HandleFunc("/guide", frontend.Guide)
-	api.router.Handle("../html/", http.StripPrefix("../html/", http.FileServer(http.Dir("../html/"))))
-	api.router.Handle("../html/assets/", http.StripPrefix("../html/assets", http.FileServer(http.Dir("../html/assets"))))
+	go api.router.HandleFunc("/", frontend.Index)
+	go api.router.HandleFunc("/create", frontend.Create)
+	go api.router.HandleFunc("/guide", frontend.Guide)
+	go api.router.Handle("../html/", http.StripPrefix("../html/", http.FileServer(http.Dir("../html/"))))
+	go api.router.Handle("../html/assets/", http.StripPrefix("../html/assets", http.FileServer(http.Dir("../html/assets"))))
 
 	//API endpoints
-	api.router.HandleFunc("/api/order/list", GetOrders)
-	api.router.HandleFunc("/api/order/create", CreateOrder)
-	api.router.HandleFunc("/api/order/update", UpdateOrder)
-	api.router.HandleFunc("/api/order/delete", DeleteOrder)
+	go api.router.HandleFunc("/api/order/list", GetOrders)
+	go api.router.HandleFunc("/api/order/create", CreateOrder)
+	go api.router.HandleFunc("/api/order/update", UpdateOrder)
+	go api.router.HandleFunc("/api/order/delete", DeleteOrder)
 	fmt.Println("API запущено")
 
 	//Запролнения массивов с заказами хоть чем-то
