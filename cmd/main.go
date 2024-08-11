@@ -1,19 +1,15 @@
 package main
 
 import (
-	"SoCC/pkg/api"
-	"fmt"
 	"log"
-	"net/http"
+	sooc "orderalready"
+	"orderalready/pkg/handler"
 )
 
-func runServer() {
-	api := api.New("localhost:8090", http.NewServeMux())
-	api.FillEndpoints()
-	fmt.Println("Сервер запущен на порту 8090")
-	log.Fatal(api.ListenAndServe())
-}
-
 func main() {
-	runServer()
+	handlers := new(handler.Handler)
+	srv := new(sooc.Server)
+	if err := srv.Run("8090", handlers.InitRouts()); err != nil {
+		log.Fatalf("error occurupted while running http server: " + err.Error())
+	}
 }
